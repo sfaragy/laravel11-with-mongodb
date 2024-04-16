@@ -6,6 +6,7 @@ use App\Events\RealTimeEvent;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Redis;
 
 /**
  * This controller will handle all the related triggers for event broadcasting.
@@ -22,7 +23,13 @@ class RealTimeController extends Controller
     public function realtimeTestEvent(Request $request): JsonResponse
     {
         $message = $request->input('message', 'Default message');
-        event(new RealTimeEvent($message));
-        return response()->json(['message' => 'Event triggered ' . $message]);
+
+        $recentMessage = Redis::connection()->get('recent_message');
+
+        if($recentMessage != $message){
+            $recentMessage = Redis::connection()->set('recent_message', (string) $message);
+        }
+        event(new RealTimeEvent($recentMessage));
+        return response()->json(['message' => 'Event triggered ' . $recentMessage]);
     }
 }

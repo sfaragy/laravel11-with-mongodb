@@ -20,9 +20,83 @@ add this to the hosts file in your system
 /api/realtime-test-event
 ```
 
+To test the realtime api from another next.js app:
+
+Create a folder and creat a new next.js app:
+```
+npx create-next-app my-nextjs-app
+cd my-nextjs-app
+npm install axios
+npm run dev
+```
+
+Add this following code to page.tsx
+```
+"use client"
+import { useEffect, useState } from 'react';
+
+import axios from 'axios';
+
+const triggerRealtimeEvent = async () => {
+    try {
+        const response = await axios.post('http://lmw.local.com/api/realtime-test-event', {
+            // Add any data you want to send with the request
+        });
+        console.log('Event triggered successfully:', response.data);
+    } catch (error) {
+        console.error('Error triggering event:', error);
+    }
+};
 
 
 
+
+const RealtimePage = () => {
+    // useEffect(() => {
+    //   triggerRealtimeEvent()
+    // }, []);
+
+    // return (
+    //     <div>
+    //         <h1>Real-Time Page</h1>
+    //         {/* Add your real-time content here */}
+    //     </div>
+    // );
+
+    const [updates, setUpdates] = useState([]);
+
+    useEffect(() => {
+        const fetchUpdates = async () => {
+            try {
+                const response = await axios.post('http://lmw.local.com/api/realtime-test-event');
+                setUpdates(response.data.message);
+                console.log(response.data.message);
+            } catch (error) {
+                console.error('Error fetching updates:', error);
+            }
+        };
+
+        const interval = setInterval(fetchUpdates, 5000); // Poll every 5 seconds
+       
+        return () => {
+            clearInterval(interval);
+        };
+
+    }, []);
+
+    return (
+        <div>
+            <h1>Real-Time Page</h1>
+            <p>
+           {updates}
+            </p>
+        </div>
+    );
+};
+
+export default RealtimePage;
+
+```
 
 
 # In the future we can write some entrypoint files and add in Dockerfile to copy it
