@@ -1,13 +1,14 @@
 
 This is a boilerplate for a test exercise:
+``` 
 Using Laravel 11
 Mongodb
 Redis
 PHP8.3-fpm
 Nginx
+```
 
-
-MongoDB is running in a different container. If you want to add it in the same project then please add the following link in docker-compose.yml
+MongoDB is running in a different container as per my exercise. If anyone want to add it in the same project then please add the following in docker-compose.yml
 
 ```
   mongo:
