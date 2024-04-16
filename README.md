@@ -30,19 +30,6 @@ import { useEffect, useState } from 'react';
 
 import axios from 'axios';
 
-const triggerRealtimeEvent = async () => {
-    try {
-        const response = await axios.post('http://lmw.local.com/api/realtime-test-event', {
-        });
-        console.log('Event triggered successfully:', response.data);
-    } catch (error) {
-        console.error('Error triggering event:', error);
-    }
-};
-
-
-
-
 const RealtimePage = () => {
 
     const [updates, setUpdates] = useState([]);
@@ -77,7 +64,6 @@ const RealtimePage = () => {
 };
 
 export default RealtimePage;
-
 
 ```
 Based on this project the endpoint is http://lmw.local.com/api/realtime-test-event but if you use your own domain alias of localhost then please update it as usual. 
