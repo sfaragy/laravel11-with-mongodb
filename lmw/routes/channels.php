@@ -16,3 +16,12 @@ use Illuminate\Support\Facades\Broadcast;
 Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
+
+
+//Broadcast::channel('realtime-test-channel', function ($user) {
+//    return $user instanceof User;
+//});
+
+Broadcast::channel('realtime-test-channel', function () {
+    return "test";
+});

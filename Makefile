@@ -26,3 +26,6 @@ seed:
 
 keygenerate:
 	docker-compose exec realtime2_web_1 php artisan key:generate
+
+redis-login:
+	docker exec -it realtime2_redis_1 redis-cli

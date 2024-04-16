@@ -1,11 +1,27 @@
 version: '3'
 services:
+  nginx:
+    build:
+      context: .
+      dockerfile: nginx.dockerfile
+    depends_on:
+      - web
+      - redis
+    container_name: nginx-lmw
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./lmw/:/var/www/html
+    networks:
+      - my-network
+    environment:
+      - NGINX_HOST=lmw.local.com
+
   web:
     build:
       context: .
       dockerfile: Dockerfile
-    ports:
-      - "8000:8000"
     volumes:
       - ./lmw/:/var/www/html
     environment:

@@ -14,13 +14,16 @@ class RealTimeEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    private $message;
+    /**
+     * @var string
+     */
+    private string $message;
 
     /**
      * Create a new event instance.
-     * @param $message
+     * @param string $message
      */
-    public function __construct($message)
+    public function __construct(string $message)
     {
         $this->message = $message;
     }
@@ -28,12 +31,12 @@ class RealTimeEvent
     /**
      * Get the channels the event should broadcast on.
      *
-     * @return array<int, \Illuminate\Broadcasting\Channel>
+     * @return array
      */
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('channel-name'),
+            'realtime-test-channel'
         ];
     }
 }

@@ -39,6 +39,10 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Copy existing application directory contents
 COPY ./lmw/ .
 
+#RUN composer dump-autoload -o \
+#    && chown -R :www-data /var/www/html \
+#    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache \
+
 # Install dependencies
 RUN composer install
 

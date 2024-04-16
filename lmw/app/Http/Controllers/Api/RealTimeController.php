@@ -1,0 +1,28 @@
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Events\RealTimeEvent;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+
+/**
+ * This controller will handle all the related triggers for event broadcasting.
+ */
+class RealTimeController extends Controller
+{
+
+    /**
+     * This event will trigger the broadcast.
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function realtimeTestEvent(Request $request): JsonResponse
+    {
+        $message = $request->input('message', 'Default message');
+        event(new RealTimeEvent($message));
+        return response()->json(['message' => 'Event triggered ' . $message]);
+    }
+}
