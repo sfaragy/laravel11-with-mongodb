@@ -4,13 +4,6 @@ To build the application:
 To start the application:
 ``` make start ```
 
-To test the broadcasts:
-``` 
-make redis-login
-//subscribe [channel name]
-subscribe realtime-test-channel
-
-```
 App URL: lmw.local.com / localhost
 
 add this to the hosts file in your system
@@ -40,7 +33,6 @@ import axios from 'axios';
 const triggerRealtimeEvent = async () => {
     try {
         const response = await axios.post('http://lmw.local.com/api/realtime-test-event', {
-            // Add any data you want to send with the request
         });
         console.log('Event triggered successfully:', response.data);
     } catch (error) {
@@ -52,16 +44,6 @@ const triggerRealtimeEvent = async () => {
 
 
 const RealtimePage = () => {
-    // useEffect(() => {
-    //   triggerRealtimeEvent()
-    // }, []);
-
-    // return (
-    //     <div>
-    //         <h1>Real-Time Page</h1>
-    //         {/* Add your real-time content here */}
-    //     </div>
-    // );
 
     const [updates, setUpdates] = useState([]);
 
@@ -76,7 +58,7 @@ const RealtimePage = () => {
             }
         };
 
-        const interval = setInterval(fetchUpdates, 5000); // Poll every 5 seconds
+        const interval = setInterval(fetchUpdates, 5000);
        
         return () => {
             clearInterval(interval);
@@ -96,8 +78,9 @@ const RealtimePage = () => {
 
 export default RealtimePage;
 
-```
 
+```
+Based on this project the endpoint is http://lmw.local.com/api/realtime-test-event but if you use your own domain alias of localhost then please update it as usual. 
 
 # In the future we can write some entrypoint files and add in Dockerfile to copy it
 ```
